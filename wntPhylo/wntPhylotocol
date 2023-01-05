@@ -1,0 +1,70 @@
+# PLANNED ANALYSES FOR PHYLOGENETIC ANALYSES OF HOLOTHUROID MELANOTRANSFERRINS 
+ Principle Investigators: Joshua Medina Feliciano  
+ Draft or Version Number: v.1.0
+ Date: 13 December 2022
+ Note: this document will be updated if necessary (updates will be tracked through GitHub)
+
+## LIST OF ABBREVIATIONS
+
+* *Hglab* - *Holothuria glaberrima*
+* *Ajapo* - *Apostichopus japonicus*
+* *Spurp* - *Strongylocentrotus purpuratus*
+* *Efrau* - *Eupentacta fraudatrix*
+* *Pmini* - *Patiria miniata*
+* *Lvari* - *Lytechinus variegatus*
+
+## 1 INTRODUCTION: BACKGROUND INFORMATION AND SCIENTIFIC RATIONALE
+
+### 1.1 _Background Information_
+
+Wnt genes of this species were initially characterized in the transcriptome of intestinal tissue utilizing sequences of other echinoderm species.
+
+### 1.2 _Rationale_
+
+As part of this project here we aim to characterize the genomic organization and structure of all the Wnt genes of *H. glaberrima*.
+
+### 1.3 _Objectives_
+
+Properly characterize Wnt genes of the sea cucumber *H. glaberrima* based on evolutionary relationship to other echinoderms.
+
+## 2 STUDY DESIGN AND ENDPOINTS
+
+#### 2.1 Build dataset.
+
+Initially we extracted Wnt sequences from the genome of the sea cucumber based on manual annotation. Sequences from other echinoderm species were obtained from NCBI.
+
+```
+mafft echinoderms-wnt.fa > echinoderms-wnt.ma.fa
+```
+
+#### 2.2 Run IQTREE tree
+
+```
+iqtree -s echinoderms-wnt.ma.fa -nt AUTO -bb 1000 -m TEST -pre iq-echino-wnt
+```
+
+#### 2.3  RAXML with 25 starting parsimony trees and 25 random starting trees; the best fit model will be determined from the previous IQTREE run.
+
+```
+raxmlHPC-SSE3.PTHREADS -f a -x 420 -# 100 -T 25 -p 420 -# 25 -m PROTGAMMAILG -s echinoderms-wnt.ma.fa -n raxml-echino-wnt_mp
+```
+```
+raxmlHPC-SSE3.PTHREADS -f a -x 420 -# 100 -T 25 -d -p 420 -# 25 -m PROTGAMMAILG -s echinoderms-wnt.ma.fa -n raxml-echino-wnt_rt
+```
+
+#### 2.4 COMPARE Iqtree and 50 rax trees using rax to report the likelihood values; generate a likelihood score using RAxML for Iq-tree and grep for the likelihood values from RAxML_info files for RAxML runs.
+
+```
+raxmlHPC-SSE3 -f e -m PROTGAMMAILG -t iq-echino-wnt.treefile -s echinoderms-wnt.ma.fa -n raxml-iqtree
+grep 'Starting final GAMMA-based' *info*
+```
+
+## 3 WORK COMPLETED SO FAR WITH DATES
+
+We have not conducted any of these analyses prior to March 13, 2022.
+
+## 4 LITERATURE REFERENCED
+
+
+## APPENDIX
+
