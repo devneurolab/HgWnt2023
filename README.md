@@ -1,1 +1,2 @@
-# HgWnt2023
+# Data from Wnt characterization in *H. glaberrima*.
+
